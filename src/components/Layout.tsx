@@ -9,7 +9,7 @@ interface LayoutProps {
 }
 
 export default function Layout({ children, currentView, onViewChange }: LayoutProps) {
-  const { user, userRole, signOut } = useAuth();
+  const { userRole, signOut } = useAuth();
 
   const handleSignOut = async () => {
     try {

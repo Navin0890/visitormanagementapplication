@@ -47,7 +47,11 @@ export default function ExitLog() {
         .order('check_in_time', { ascending: false });
 
       if (error) throw error;
-      setActiveVisits(data || []);
+      setActiveVisits((data || []).map((item: any) => ({
+        ...item,
+        visitor: item.visitor[0],
+        employee: item.employee[0]
+      })));
     } catch (error) {
       console.error('Error fetching active visits:', error);
     } finally {

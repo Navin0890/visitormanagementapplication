@@ -77,7 +77,11 @@ export default function Dashboard() {
         rejected: rejectedRes.count || 0
       });
 
-      setRecentVisits(recentRes.data || []);
+      setRecentVisits((recentRes.data || []).map((item: any) => ({
+        ...item,
+        visitor: item.visitor[0],
+        employee: item.employee[0]
+      })));
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
     } finally {

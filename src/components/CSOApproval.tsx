@@ -49,7 +49,11 @@ export default function CSOApproval() {
         .order('created_at', { ascending: true });
 
       if (error) throw error;
-      setPendingVisits(data || []);
+      setPendingVisits((data || []).map((item: any) => ({
+        ...item,
+        visitor: item.visitor[0],
+        employee: item.employee[0]
+      })));
     } catch (error) {
       console.error('Error fetching pending visits:', error);
     } finally {
