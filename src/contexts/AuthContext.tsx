@@ -46,15 +46,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const fetchUserRole = async (userId: string) => {
     try {
-      const { data, error } = await supabase
+      // First check if user is active
+      const { data: userData, error: userError } = await supabase
         .from('users')
-        .select('role')
+        .select('active')
         .eq('id', userId)
-        .eq('is_active', true)
         .maybeSingle();
 
-      if (error) throw error;
-      setUserRole(data?.role ?? null);
+      if (userError) throw userError;
+      
+      if (!userData?.active) {
+        setUserRole(null);
+        setLoading(false);
+        return;
+      }
+
+      // Then fetch their role from user_roles table
+      const { data: roleData, error: roleError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId)
+        .maybeSingle();
+
+      if (roleError) throw roleError;
+      setUserRole(roleData?.role ?? null);
     } catch (error) {
       console.error('Error fetching user role:', error);
       setUserRole(null);

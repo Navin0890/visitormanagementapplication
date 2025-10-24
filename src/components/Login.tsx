@@ -3,7 +3,7 @@ import { LogIn } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function Login() {
-  const [email, setEmail] = useState('Admin');
+  const [email, setEmail] = useState('admin@company.com');
   const [password, setPassword] = useState('Admin123');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -106,7 +106,7 @@ export default function Login() {
           </p>
           <div className="space-y-2">
             <button
-              onClick={() => quickLogin('Admin', 'Admin123')}
+              onClick={() => quickLogin('admin@company.com', 'Admin123')}
               className="w-full px-4 py-2 text-sm bg-slate-100 hover:bg-slate-200 rounded-lg transition text-slate-700"
             >
               Admin Account
